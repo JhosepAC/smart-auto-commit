@@ -8,6 +8,10 @@ from core.ai.providers.provider_registry import (
     ProviderRegistry,
 )
 
+from core.ai.services.prompt_service import (
+    PromptService,
+)
+
 
 class AIOrchestrator:
     """
@@ -18,6 +22,7 @@ class AIOrchestrator:
         self,
     ) -> None:
         self.registry = ProviderRegistry()
+        self.prompt_service = PromptService()
 
     def generate(
         self,
