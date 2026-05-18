@@ -27,3 +27,18 @@ class GitRepositoryStatus:
     untracked_files: list[GitFileStatus]
 
     deleted_files: list[GitFileStatus]
+
+
+@dataclass(slots=True)
+class GitDiff:
+    """
+    Represent Git diff information.
+    """
+
+    file_path: str
+
+    diff_content: str
+
+    additions: int
+
+    deletions: int
