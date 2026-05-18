@@ -42,3 +42,26 @@ class GitDiff:
     additions: int
 
     deletions: int
+
+
+@dataclass(slots=True)
+class FileAnalysis:
+    """
+    Represent semantic file analysis.
+    """
+
+    file_path: str
+
+    extension: str
+
+    language: str
+
+    category: str
+
+    importance_score: int
+
+    is_code_file: bool
+
+    is_configuration_file: bool
+
+    is_documentation_file: bool
