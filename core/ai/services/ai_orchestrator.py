@@ -12,6 +12,10 @@ from core.ai.services.prompt_service import (
     PromptService,
 )
 
+from core.ai.config.ai_settings import (
+    AISettingsManager,
+)
+
 
 class AIOrchestrator:
     """
@@ -23,6 +27,7 @@ class AIOrchestrator:
     ) -> None:
         self.registry = ProviderRegistry()
         self.prompt_service = PromptService()
+        self.settings_manager = AISettingsManager()
 
     def generate(
         self,
