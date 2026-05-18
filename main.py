@@ -1,16 +1,12 @@
-from core.bootstrap.application import Application
-from core.exceptions.decorators import safe_execution
+from cli.app import app
 
 
-@safe_execution
 def main() -> None:
     """
     Main application entry point.
     """
 
-    app = Application()
-
-    app.bootstrap()
+    app()
 
 
 if __name__ == "__main__":
