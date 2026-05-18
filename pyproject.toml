@@ -1,0 +1,11 @@
+[project]
+name = "smart-auto-commit"
+version = "0.1.0"
+description = "Intelligent automatic git commit system"
+requires-python = ">=3.12"
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
