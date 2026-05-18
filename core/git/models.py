@@ -199,3 +199,35 @@ class RepositorySafetyReport:
     current_branch: str
 
     total_changed_files: int
+
+
+@dataclass(slots=True)
+class RepositoryCheckpoint:
+    """
+    Represent repository recovery checkpoint.
+    """
+
+    branch: str
+
+    head_commit: str
+
+    staged_files: list[str]
+
+    modified_files: list[str]
+
+
+@dataclass(slots=True)
+class RecoveryResult:
+    """
+    Represent rollback recovery result.
+    """
+
+    success: bool
+
+    restored_branch: str
+
+    restored_commit: str
+
+    stdout: str
+
+    stderr: str
