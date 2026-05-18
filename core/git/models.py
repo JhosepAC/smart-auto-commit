@@ -103,3 +103,18 @@ class SemanticClassification:
     detected_patterns: list[str]
 
     reasoning: str
+
+
+@dataclass(slots=True)
+class GeneratedCommit:
+    """
+    Represent generated commit message.
+    """
+
+    commit_type: str
+
+    scope: str
+
+    title: str
+
+    full_message: str
