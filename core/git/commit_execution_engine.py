@@ -19,6 +19,10 @@ from core.git.repository_safety_guard import (
     RepositorySafetyGuard,
 )
 
+from core.git.rollback_recovery_system import (
+    RollbackRecoverySystem,
+)
+
 from core.logging.logger import logger
 
 
@@ -41,6 +45,8 @@ class CommitExecutionEngine:
 
         self.safety_guard = RepositorySafetyGuard(self.repository_path)
 
+        self.rollback_system = RollbackRecoverySystem(self.repository_path)
+
     def execute_commit(
         self,
         dry_run: bool = True,
@@ -50,6 +56,8 @@ class CommitExecutionEngine:
         """
 
         logger.info(("Starting commit execution " f"(dry_run={dry_run})"))
+
+        checkpoint = self.rollback_system.create_checkpoint()
 
         safety_report = self.safety_guard.validate_repository_safety()
 
@@ -121,6 +129,12 @@ class CommitExecutionEngine:
 
         else:
             logger.error("Commit execution failed")
+
+            recovery_result = self.rollback_system.restore_checkpoint(checkpoint)
+
+            logger.warning(
+                ("Rollback recovery " f"executed: " f"{recovery_result.success}")
+            )
 
         return CommitExecutionResult(
             success=success,
