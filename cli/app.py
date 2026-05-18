@@ -1,6 +1,7 @@
 import typer
 
 from cli.commands.health import health_command
+from cli.commands.start import start_command
 from cli.commands.version import version_command
 
 app = typer.Typer(
@@ -12,6 +13,8 @@ app = typer.Typer(
 # =========================================================
 # COMMAND REGISTRATION
 # =========================================================
+
+app.command(name="start")(start_command)
 
 app.command(name="health")(health_command)
 
