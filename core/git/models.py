@@ -88,3 +88,18 @@ class CommitContext:
     high_importance_files: list[str]
 
     summary: str
+
+
+@dataclass(slots=True)
+class SemanticClassification:
+    """
+    Represent semantic change classification.
+    """
+
+    commit_type: str
+
+    confidence_score: float
+
+    detected_patterns: list[str]
+
+    reasoning: str
