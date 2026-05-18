@@ -133,3 +133,22 @@ class CommitQualityReport:
     warnings: list[str]
 
     suggestions: list[str]
+
+
+@dataclass(slots=True)
+class CommitExecutionResult:
+    """
+    Represent commit execution result.
+    """
+
+    success: bool
+
+    commit_message: str
+
+    commit_hash: str | None
+
+    stdout: str
+
+    stderr: str
+
+    dry_run: bool
