@@ -5,6 +5,10 @@ from core.ai.providers.mock_provider import (
     MockAIProvider,
 )
 
+from core.ai.providers.ollama_provider import (
+    OllamaProvider,
+)
+
 
 class ProviderRegistry:
     """
@@ -16,6 +20,7 @@ class ProviderRegistry:
     ) -> None:
         self.providers = {
             "mock": MockAIProvider(),
+            "ollama": OllamaProvider(),
         }
 
     def get_provider(
