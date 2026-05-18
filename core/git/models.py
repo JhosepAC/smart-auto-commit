@@ -118,3 +118,18 @@ class GeneratedCommit:
     title: str
 
     full_message: str
+
+
+@dataclass(slots=True)
+class CommitQualityReport:
+    """
+    Represent commit quality validation.
+    """
+
+    is_valid: bool
+
+    quality_score: int
+
+    warnings: list[str]
+
+    suggestions: list[str]
