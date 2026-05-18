@@ -3,7 +3,11 @@ from core.exceptions.decorators import safe_execution
 
 
 @safe_execution
-def main():
+def main() -> None:
+    """
+    Main application entry point.
+    """
+
     app = Application()
 
     app.bootstrap()
