@@ -180,3 +180,22 @@ class SmartStagingResult:
     total_allowed: int
 
     total_blocked: int
+
+
+@dataclass(slots=True)
+class RepositorySafetyReport:
+    """
+    Represent repository safety validation.
+    """
+
+    safe: bool
+
+    risk_score: int
+
+    blocked_reasons: list[str]
+
+    warnings: list[str]
+
+    current_branch: str
+
+    total_changed_files: int
