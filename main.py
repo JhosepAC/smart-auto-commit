@@ -1,10 +1,10 @@
-from core.config.settings import settings
+from core.logging.logger import logger
 
 
 def main():
-    print(settings.application.name)
-    print(settings.ai.model)
-    print(settings.logging.level)
+    logger.info("Smart Auto Commit initialized")
+    logger.warning("Logger system running correctly")
+    logger.error("Example error message")
 
 
 if __name__ == "__main__":
