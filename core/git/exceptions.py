@@ -23,3 +23,19 @@ class InvalidRepositoryError(GitRepositoryError):
     """
 
     pass
+
+
+class DetachedHeadError(GitRepositoryError):
+    """
+    Raised when repository is in detached HEAD state.
+    """
+
+    pass
+
+
+class InvalidGitHeadError(GitRepositoryError):
+    """
+    Raised when Git HEAD is invalid.
+    """
+
+    pass
