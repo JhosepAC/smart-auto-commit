@@ -65,3 +65,26 @@ class FileAnalysis:
     is_configuration_file: bool
 
     is_documentation_file: bool
+
+
+@dataclass(slots=True)
+class CommitContext:
+    """
+    Represent aggregated commit context.
+    """
+
+    total_files_changed: int
+
+    total_additions: int
+
+    total_deletions: int
+
+    impacted_languages: list[str]
+
+    impacted_categories: list[str]
+
+    critical_files: list[str]
+
+    high_importance_files: list[str]
+
+    summary: str
