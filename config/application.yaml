@@ -1,0 +1,20 @@
+application:
+  name: smart-auto-commit
+  version: 0.1.0
+  environment: development
+
+logging:
+  level: INFO
+  file: logs/app.log
+
+git:
+  auto_stage: true
+  conventional_commits: true
+
+ai:
+  provider: ollama
+  model: deepseek-coder
+  host: http://localhost:11434
+
+watcher:
+  debounce_seconds: 10
