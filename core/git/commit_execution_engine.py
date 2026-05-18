@@ -15,6 +15,10 @@ from core.git.smart_staging_engine import (
     SmartStagingEngine,
 )
 
+from core.git.repository_safety_guard import (
+    RepositorySafetyGuard,
+)
+
 from core.logging.logger import logger
 
 
@@ -35,6 +39,8 @@ class CommitExecutionEngine:
 
         self.staging_engine = SmartStagingEngine(self.repository_path)
 
+        self.safety_guard = RepositorySafetyGuard(self.repository_path)
+
     def execute_commit(
         self,
         dry_run: bool = True,
@@ -44,6 +50,20 @@ class CommitExecutionEngine:
         """
 
         logger.info(("Starting commit execution " f"(dry_run={dry_run})"))
+
+        safety_report = self.safety_guard.validate_repository_safety()
+
+        if not safety_report.safe:
+            logger.warning("Repository safety validation failed")
+
+            return CommitExecutionResult(
+                success=False,
+                commit_message="",
+                commit_hash=None,
+                stdout="",
+                stderr=("Repository safety validation " "failed"),
+                dry_run=dry_run,
+            )
 
         validation_report = self.validator.validate_commit()
 
