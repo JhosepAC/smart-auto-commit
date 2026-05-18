@@ -10,6 +10,11 @@ from core.git.conventional_commit_generator import (
 from core.git.models import (
     CommitExecutionResult,
 )
+
+from core.git.smart_staging_engine import (
+    SmartStagingEngine,
+)
+
 from core.logging.logger import logger
 
 
@@ -27,6 +32,8 @@ class CommitExecutionEngine:
         self.generator = ConventionalCommitGenerator(self.repository_path)
 
         self.validator = CommitQualityValidator(self.repository_path)
+
+        self.staging_engine = SmartStagingEngine(self.repository_path)
 
     def execute_commit(
         self,
@@ -68,7 +75,7 @@ class CommitExecutionEngine:
                 dry_run=True,
             )
 
-        self._stage_changes()
+        self._stage_allowed_files()
 
         result = subprocess.run(
             [
@@ -104,22 +111,29 @@ class CommitExecutionEngine:
             dry_run=False,
         )
 
-    def _stage_changes(
+    def _stage_allowed_files(
         self,
     ) -> None:
         """
-        Stage repository changes.
+        Stage only allowed files.
         """
 
-        logger.info("Staging repository changes")
+        allowed_files = self.staging_engine.stage_allowed_files()
 
-        subprocess.run(
-            ["git", "add", "."],
-            cwd=self.repository_path,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        logger.info((f"Staging " f"{len(allowed_files)} " f"allowed files"))
+
+        for file_path in allowed_files:
+            subprocess.run(
+                [
+                    "git",
+                    "add",
+                    file_path,
+                ],
+                cwd=self.repository_path,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
 
     def _get_last_commit_hash(
         self,

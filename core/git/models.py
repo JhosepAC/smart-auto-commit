@@ -152,3 +152,31 @@ class CommitExecutionResult:
     stderr: str
 
     dry_run: bool
+
+
+@dataclass(slots=True)
+class StagingCandidate:
+    """
+    Represent staging candidate file.
+    """
+
+    path: str
+
+    allowed: bool
+
+    reason: str
+
+
+@dataclass(slots=True)
+class SmartStagingResult:
+    """
+    Represent smart staging analysis.
+    """
+
+    allowed_files: list[StagingCandidate]
+
+    blocked_files: list[StagingCandidate]
+
+    total_allowed: int
+
+    total_blocked: int
