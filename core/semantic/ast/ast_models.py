@@ -208,6 +208,27 @@ class RepositorySemanticContext:
 
 
 @dataclass(slots=True)
+class RepositoryEvolutionProfile:
+    """
+    Represent repository evolution profile.
+    """
+
+    total_analyzed_commits: int
+
+    dominant_patterns: list[str]
+
+    dominant_components: list[str]
+
+    architectural_trends: list[str]
+
+    repository_activity_score: int
+
+    semantic_maturity: str
+
+    ai_evolution_context: str
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
