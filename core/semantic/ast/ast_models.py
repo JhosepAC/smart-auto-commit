@@ -168,6 +168,23 @@ class HeuristicAnalysis:
 
 
 @dataclass(slots=True)
+class SemanticContext:
+    """
+    Represent semantic context.
+    """
+
+    technical_summary: str
+
+    architectural_summary: str
+
+    impact_summary: str
+
+    reasoning_chain: list[str]
+
+    ai_context: str
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
@@ -198,3 +215,5 @@ class ASTAnalysisResult:
     critical_modules: list[CriticalModule] = field(default_factory=list)
 
     heuristic_analysis: HeuristicAnalysis | None = None
+
+    semantic_context: SemanticContext | None = None

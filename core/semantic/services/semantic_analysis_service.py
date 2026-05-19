@@ -14,6 +14,10 @@ from core.semantic.heuristics.heuristic_engine import (
     HeuristicEngine,
 )
 
+from core.semantic.context.semantic_context_builder import (
+    SemanticContextBuilder,
+)
+
 
 class SemanticAnalysisService:
     """
@@ -25,6 +29,7 @@ class SemanticAnalysisService:
     ) -> None:
         self.registry = ParserRegistry()
         self.heuristic_engine = HeuristicEngine()
+        self.context_builder = SemanticContextBuilder()
 
     def analyze_file(
         self,
@@ -50,6 +55,10 @@ class SemanticAnalysisService:
         heuristic_analysis = self.heuristic_engine.analyze(result)
 
         result.heuristic_analysis = heuristic_analysis
+
+        semantic_context = self.context_builder.build(result)
+
+        result.semantic_context = semantic_context
 
         logger.info(("Semantic analysis " "completed successfully"))
 

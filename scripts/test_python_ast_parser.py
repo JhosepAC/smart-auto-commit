@@ -121,6 +121,38 @@ def main() -> None:
 
     print()
 
+    print("Semantic Context:")
+
+    if result.semantic_context:
+        print()
+
+        print("Technical Summary:")
+        print(result.semantic_context.technical_summary)
+
+        print()
+
+        print("Architectural Summary:")
+        print(result.semantic_context.architectural_summary)
+
+        print()
+
+        print("Impact Summary:")
+        print(result.semantic_context.impact_summary)
+
+        print()
+
+        print("Reasoning Chain:")
+
+        for item in result.semantic_context.reasoning_chain:
+            print(f"- {item}")
+
+        print()
+
+        print("AI Context:")
+        print(result.semantic_context.ai_context)
+
+    print()
+
 
 if __name__ == "__main__":
     main()
