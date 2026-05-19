@@ -229,6 +229,27 @@ class RepositoryEvolutionProfile:
 
 
 @dataclass(slots=True)
+class SemanticIntentProfile:
+    """
+    Represent semantic developer intent.
+    """
+
+    primary_intent: str
+
+    secondary_intents: list[str]
+
+    architectural_intention: str
+
+    implementation_goal: str
+
+    behavioral_reasoning: list[str]
+
+    semantic_objective: str
+
+    ai_intent_context: str
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
