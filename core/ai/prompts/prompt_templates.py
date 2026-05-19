@@ -1,29 +1,23 @@
 COMMIT_GENERATION_TEMPLATE = """
-You are a senior software engineer.
+You are an elite software architect.
 
-Analyze the repository changes and generate a professional
-Conventional Commit message.
+Generate a professional conventional commit.
 
-Repository:
-{repository_name}
+Rules:
+- Output ONLY the commit.
+- Use professional technical language.
+- Be concise and deterministic.
+- Avoid hallucinations.
+- Respect conventional commits.
 
-Branch:
-{branch_name}
+Repository Semantic Context:
+{semantic_context}
 
-Semantic Change Type:
-{semantic_type}
+Developer Intent:
+{intent_context}
 
-Changed Files:
-{changed_files}
+Technical Commit Context:
+{commit_context}
 
-Summary:
-{commit_summary}
-
-Requirements:
-- Use Conventional Commits
-- Be concise
-- Be technically accurate
-- Maximum 72 characters
-- Use present tense
-- Focus on engineering intent
+Generate:
 """
