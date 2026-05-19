@@ -24,6 +24,18 @@ from core.semantic.ast.base_parser import (
     BaseASTParser,
 )
 
+from core.semantic.analyzers.coupling_detector import (
+    CouplingDetector,
+)
+
+from core.semantic.analyzers.critical_module_detector import (
+    CriticalModuleDetector,
+)
+
+from core.semantic.analyzers.impact_analyzer import (
+    ImpactAnalyzer,
+)
+
 
 class PythonASTParser(
     BaseASTParser,
@@ -52,6 +64,12 @@ class PythonASTParser(
         self.dependency_analyzer = DependencyAnalyzer()
 
         self.relationship_mapper = RelationshipMapper()
+
+        self.coupling_detector = CouplingDetector()
+
+        self.critical_module_detector = CriticalModuleDetector()
+
+        self.impact_analyzer = ImpactAnalyzer()
 
     def parse(
         self,
@@ -136,6 +154,16 @@ class PythonASTParser(
             architectural_components
         )
 
+        coupling_score = self.coupling_detector.calculate_score(semantic_dependencies)
+
+        critical_modules = self.critical_module_detector.detect(semantic_dependencies)
+
+        impact_analysis = self.impact_analyzer.analyze(
+            dependencies=(semantic_dependencies),
+            critical_modules=(critical_modules),
+            coupling_score=(coupling_score),
+        )
+
         return ASTAnalysisResult(
             file_path=str(file_path),
             language="Python",
@@ -147,6 +175,8 @@ class PythonASTParser(
             architectural_components=(architectural_components),
             semantic_dependencies=(semantic_dependencies),
             semantic_relationships=(semantic_relationships),
+            impact_analysis=impact_analysis,
+            critical_modules=critical_modules,
         )
 
     def _extract_function(

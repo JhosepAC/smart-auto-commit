@@ -75,6 +75,26 @@ def main() -> None:
 
     print()
 
+    print("Impact Analysis:")
+
+    if result.impact_analysis:
+        print((f"- Impact Score: " f"{result.impact_analysis.impact_score}"))
+
+        print((f"- Coupling Score: " f"{result.impact_analysis.coupling_score}"))
+
+        print((f"- Blast Radius: " f"{result.impact_analysis.blast_radius}"))
+
+        print((f"- Criticality: " f"{result.impact_analysis.criticality_level}"))
+
+    print()
+
+    print("Critical Modules:")
+
+    for module in result.critical_modules:
+        print((f"- " f"{module.module_name} " f"({module.severity})"))
+
+    print()
+
 
 if __name__ == "__main__":
     main()

@@ -111,6 +111,34 @@ class SemanticRelationship:
 
 
 @dataclass(slots=True)
+class ImpactAnalysis:
+    """
+    Represent impact analysis.
+    """
+
+    impact_score: int
+
+    coupling_score: int
+
+    blast_radius: int
+
+    criticality_level: str
+
+
+@dataclass(slots=True)
+class CriticalModule:
+    """
+    Represent critical module.
+    """
+
+    module_name: str
+
+    reason: str
+
+    severity: str
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
@@ -135,3 +163,7 @@ class ASTAnalysisResult:
     semantic_dependencies: list[SemanticDependency]
 
     semantic_relationships: list[SemanticRelationship]
+
+    impact_analysis: ImpactAnalysis | None
+
+    critical_modules: list[CriticalModule]
