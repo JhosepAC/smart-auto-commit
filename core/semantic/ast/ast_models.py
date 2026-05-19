@@ -185,6 +185,29 @@ class SemanticContext:
 
 
 @dataclass(slots=True)
+class RepositorySemanticContext:
+    """
+    Represent repository semantic context.
+    """
+
+    total_files: int
+
+    dominant_commit_type: str
+
+    architectural_summary: str
+
+    repository_summary: str
+
+    impacted_components: list[str]
+
+    reasoning_chain: list[str]
+
+    global_risk_level: str
+
+    ai_repository_context: str
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
