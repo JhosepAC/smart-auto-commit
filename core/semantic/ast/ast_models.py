@@ -250,6 +250,29 @@ class SemanticIntentProfile:
 
 
 @dataclass(slots=True)
+class IntelligentCommit:
+    """
+    Represent intelligent semantic commit.
+    """
+
+    commit_type: str
+
+    scope: str
+
+    title: str
+
+    summary: str
+
+    architectural_impact: str
+
+    technical_reasoning: list[str]
+
+    semantic_context: str
+
+    full_message: str
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
