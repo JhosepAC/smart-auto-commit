@@ -1,6 +1,12 @@
 import ast
 from pathlib import Path
 
+from core.semantic.analyzers.architecture_detector import (
+    ArchitectureDetector,
+)
+from core.semantic.analyzers.endpoint_detector import (
+    EndpointDetector,
+)
 from core.semantic.ast.ast_models import (
     ASTAnalysisResult,
     ASTClass,
@@ -29,6 +35,13 @@ class PythonASTParser(
         "django": "Django",
     }
 
+    def __init__(
+        self,
+    ) -> None:
+        self.endpoint_detector = EndpointDetector()
+
+        self.architecture_detector = ArchitectureDetector()
+
     def parse(
         self,
         file_path: Path,
@@ -51,18 +64,28 @@ class PythonASTParser(
 
         frameworks = set()
 
+        endpoints = []
+
         for node in ast.walk(tree):
             if isinstance(
                 node,
                 ast.FunctionDef,
             ):
-                functions.append(self._extract_function(node))
+                extracted_function = self._extract_function(node)
+
+                functions.append(extracted_function)
+
+                endpoints.extend(self.endpoint_detector.detect(node))
 
             elif isinstance(
                 node,
                 ast.AsyncFunctionDef,
             ):
-                functions.append(self._extract_async_function(node))
+                extracted_function = self._extract_async_function(node)
+
+                functions.append(extracted_function)
+
+                endpoints.extend(self.endpoint_detector.detect(node))
 
             elif isinstance(
                 node,
@@ -87,6 +110,8 @@ class PythonASTParser(
                     if framework:
                         frameworks.add(framework)
 
+        architectural_components = self.architecture_detector.detect(classes)
+
         return ASTAnalysisResult(
             file_path=str(file_path),
             language="Python",
@@ -94,6 +119,8 @@ class PythonASTParser(
             classes=classes,
             imports=imports,
             detected_frameworks=(list(frameworks)),
+            endpoints=endpoints,
+            architectural_components=(architectural_components),
         )
 
     def _extract_function(
@@ -111,7 +138,7 @@ class PythonASTParser(
                 self._get_decorator_name(decorator)
                 for decorator in (node.decorator_list)
             ],
-            arguments=[argument.arg for argument in node.args.args],
+            arguments=[argument.arg for argument in (node.args.args)],
             line_number=node.lineno,
         )
 
@@ -130,7 +157,7 @@ class PythonASTParser(
                 self._get_decorator_name(decorator)
                 for decorator in (node.decorator_list)
             ],
-            arguments=[argument.arg for argument in node.args.args],
+            arguments=[argument.arg for argument in (node.args.args)],
             line_number=node.lineno,
         )
 
@@ -195,7 +222,7 @@ class PythonASTParser(
             imports.append(
                 ASTImport(
                     module=node.module or "",
-                    imported_names=[imported.name for imported in node.names],
+                    imported_names=[imported.name for imported in (node.names)],
                     line_number=node.lineno,
                 )
             )

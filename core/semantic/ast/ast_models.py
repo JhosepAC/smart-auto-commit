@@ -51,6 +51,38 @@ class ASTImport:
 
 
 @dataclass(slots=True)
+class ASTEndpoint:
+    """
+    Represent API endpoint.
+    """
+
+    path: str
+
+    method: str
+
+    function_name: str
+
+    is_async: bool
+
+    line_number: int
+
+
+@dataclass(slots=True)
+class ArchitecturalComponent:
+    """
+    Represent architectural component.
+    """
+
+    name: str
+
+    component_type: str
+
+    framework: str | None
+
+    line_number: int
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
@@ -67,3 +99,7 @@ class ASTAnalysisResult:
     imports: list[ASTImport]
 
     detected_frameworks: list[str]
+
+    endpoints: list[ASTEndpoint]
+
+    architectural_components: list[ArchitecturalComponent]
