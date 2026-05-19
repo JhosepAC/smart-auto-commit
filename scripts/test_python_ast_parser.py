@@ -51,6 +51,30 @@ def main() -> None:
 
     print()
 
+    print("Dependencies:")
+
+    for dependency in result.semantic_dependencies:
+        print(
+            (f"- " f"{dependency.source_module} " f"-> " f"{dependency.target_module}")
+        )
+
+    print()
+
+    print("Relationships:")
+
+    for relationship in result.semantic_relationships:
+        print(
+            (
+                f"- "
+                f"{relationship.source} "
+                f"-> "
+                f"{relationship.target} "
+                f"({relationship.relationship_type})"
+            )
+        )
+
+    print()
+
 
 if __name__ == "__main__":
     main()

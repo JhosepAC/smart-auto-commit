@@ -83,6 +83,34 @@ class ArchitecturalComponent:
 
 
 @dataclass(slots=True)
+class SemanticDependency:
+    """
+    Represent semantic dependency.
+    """
+
+    source_module: str
+
+    target_module: str
+
+    dependency_type: str
+
+    line_number: int
+
+
+@dataclass(slots=True)
+class SemanticRelationship:
+    """
+    Represent semantic relationship.
+    """
+
+    source: str
+
+    target: str
+
+    relationship_type: str
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
@@ -103,3 +131,7 @@ class ASTAnalysisResult:
     endpoints: list[ASTEndpoint]
 
     architectural_components: list[ArchitecturalComponent]
+
+    semantic_dependencies: list[SemanticDependency]
+
+    semantic_relationships: list[SemanticRelationship]

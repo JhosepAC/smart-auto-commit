@@ -7,6 +7,13 @@ from core.semantic.analyzers.architecture_detector import (
 from core.semantic.analyzers.endpoint_detector import (
     EndpointDetector,
 )
+from core.semantic.analyzers.dependency_analyzer import (
+    DependencyAnalyzer,
+)
+from core.semantic.analyzers.relationship_mapper import (
+    RelationshipMapper,
+)
+
 from core.semantic.ast.ast_models import (
     ASTAnalysisResult,
     ASTClass,
@@ -41,6 +48,10 @@ class PythonASTParser(
         self.endpoint_detector = EndpointDetector()
 
         self.architecture_detector = ArchitectureDetector()
+
+        self.dependency_analyzer = DependencyAnalyzer()
+
+        self.relationship_mapper = RelationshipMapper()
 
     def parse(
         self,
@@ -112,6 +123,19 @@ class PythonASTParser(
 
         architectural_components = self.architecture_detector.detect(classes)
 
+        current_module = (
+            str(file_path).replace("\\", ".").replace("/", ".").replace(".py", "")
+        )
+
+        semantic_dependencies = self.dependency_analyzer.analyze(
+            imports=imports,
+            current_module=current_module,
+        )
+
+        semantic_relationships = self.relationship_mapper.map_relationships(
+            architectural_components
+        )
+
         return ASTAnalysisResult(
             file_path=str(file_path),
             language="Python",
@@ -121,6 +145,8 @@ class PythonASTParser(
             detected_frameworks=(list(frameworks)),
             endpoints=endpoints,
             architectural_components=(architectural_components),
+            semantic_dependencies=(semantic_dependencies),
+            semantic_relationships=(semantic_relationships),
         )
 
     def _extract_function(
