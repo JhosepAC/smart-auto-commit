@@ -10,6 +10,10 @@ from core.semantic.ast.parser_registry import (
     ParserRegistry,
 )
 
+from core.semantic.heuristics.heuristic_engine import (
+    HeuristicEngine,
+)
+
 
 class SemanticAnalysisService:
     """
@@ -20,6 +24,7 @@ class SemanticAnalysisService:
         self,
     ) -> None:
         self.registry = ParserRegistry()
+        self.heuristic_engine = HeuristicEngine()
 
     def analyze_file(
         self,
@@ -41,6 +46,10 @@ class SemanticAnalysisService:
             return None
 
         result = parser.parse(path)
+
+        heuristic_analysis = self.heuristic_engine.analyze(result)
+
+        result.heuristic_analysis = heuristic_analysis
 
         logger.info(("Semantic analysis " "completed successfully"))
 

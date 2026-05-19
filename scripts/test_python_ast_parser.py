@@ -95,6 +95,32 @@ def main() -> None:
 
     print()
 
+    print("Heuristic Analysis:")
+
+    if result.heuristic_analysis:
+        print(
+            (f"- Dominant Type: " f"{result.heuristic_analysis.dominant_commit_type}")
+        )
+
+        print((f"- Confidence: " f"{result.heuristic_analysis.confidence_score}"))
+
+        print()
+
+        print("Matches:")
+
+        for match in result.heuristic_analysis.matches:
+            print(
+                (
+                    f"- "
+                    f"{match.rule_name} "
+                    f"-> "
+                    f"{match.commit_type} "
+                    f"({match.confidence})"
+                )
+            )
+
+    print()
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 from dataclasses import (
     dataclass,
+    field,
 )
 
 
@@ -139,6 +140,34 @@ class CriticalModule:
 
 
 @dataclass(slots=True)
+class HeuristicMatch:
+    """
+    Represent heuristic match.
+    """
+
+    rule_name: str
+
+    commit_type: str
+
+    confidence: float
+
+    reason: str
+
+
+@dataclass(slots=True)
+class HeuristicAnalysis:
+    """
+    Represent heuristic analysis.
+    """
+
+    matches: list[HeuristicMatch]
+
+    dominant_commit_type: str
+
+    confidence_score: float
+
+
+@dataclass(slots=True)
 class ASTAnalysisResult:
     """
     Represent AST analysis result.
@@ -160,10 +189,12 @@ class ASTAnalysisResult:
 
     architectural_components: list[ArchitecturalComponent]
 
-    semantic_dependencies: list[SemanticDependency]
+    semantic_dependencies: list[SemanticDependency] = field(default_factory=list)
 
-    semantic_relationships: list[SemanticRelationship]
+    semantic_relationships: list[SemanticRelationship] = field(default_factory=list)
 
-    impact_analysis: ImpactAnalysis | None
+    impact_analysis: ImpactAnalysis | None = None
 
-    critical_modules: list[CriticalModule]
+    critical_modules: list[CriticalModule] = field(default_factory=list)
+
+    heuristic_analysis: HeuristicAnalysis | None = None

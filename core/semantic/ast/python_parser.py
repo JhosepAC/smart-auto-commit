@@ -175,8 +175,9 @@ class PythonASTParser(
             architectural_components=(architectural_components),
             semantic_dependencies=(semantic_dependencies),
             semantic_relationships=(semantic_relationships),
-            impact_analysis=impact_analysis,
-            critical_modules=critical_modules,
+            impact_analysis=(impact_analysis),
+            critical_modules=(critical_modules),
+            heuristic_analysis=None,
         )
 
     def _extract_function(
